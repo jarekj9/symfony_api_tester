@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Send Defined{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    <h2>This sends get request to api on some url with specific parameter, try url: https://api.datamuse.com/words with variable: rel_rhy and value: jingle</h2>   
+    <div>
+        
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table class='table-active'>
+            <tr><td>{{ form_label(form.urlkey) }} </td><td> {{ form_widget(form.urlkey) }}</td></tr> {# <select id="api_send_defined_form_url" ... #}
+            <tr><td>{{ form_label(form.var) }} </td><td>  {{ form_widget(form.var) }}</td></tr> {# <select id="api_send_defined_form_variable" ... #}
+            <tr><td>{{ form_label(form.type) }}  </td><td> {{ form_widget(form.type) }}</td></tr> 
+            <tr><td>{{ form_row(form.submit, { 'label': 'Send' }) }}</td></tr>
+        </table>
+        {{ form_end(form) }}   
+
+
+    </div>
+
+
+</div>
+
+<script>            
+        //ajax for dynamic form change after first input (form.url) selection    
+        var $url = $("#api_send_defined_form_urlkey");
+        $url.change(function() {
+            
+          var $form = $(this).closest('form');
+          var data = {};
+          data[$url.attr('name')] = $url.val();  //this is id of url from database, it will be passed to controller
+
+          $.ajax({
+            url : $form.attr('action'),
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+              $('#api_send_defined_form_var').replaceWith(
+                $(html).find('#api_send_defined_form_var')
+              );
+            }
+          });
+        });
+</script>   
+
+{% endblock %}

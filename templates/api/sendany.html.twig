@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Send Any{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+    <h2>This sends get request to api on some url with specific parameter.</h2>
+    Try url: https://api.datamuse.com/words with key: rel_rhy and value: jingle. You can pass many keys/values, separated with ';'
+
+    <div>
+        
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <table class='table-active'>
+            <tr><td>{{ form_label(form.url) }} </td><td> {{ form_widget(form.url) }}</td></tr>
+            <tr><td>{{ form_label(form.var) }} </td><td>  {{ form_widget(form.var) }}</td></tr>
+            <tr><td>{{ form_label(form.value) }}  </td><td> {{ form_widget(form.value) }}</td></tr>
+            <tr><td>{{ form_label(form.type) }}  </td><td> {{ form_widget(form.type) }}</td></tr> 
+            <tr><td>{{ form_row(form.submit, { 'label': 'Send' }) }}</td></tr>
+        </table>
+        {{ form_end(form) }}   
+        
+    </div>
+
+
+</div>
+
+
+{% endblock %}
